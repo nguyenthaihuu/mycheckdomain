@@ -293,6 +293,54 @@ check_domain()
 		fi
 
 
+	elif [ "$DTYPE" == "biz" ]
+	then
+		EXDATE_TMP=$(${WHOIS} -h whois.nic.biz "${1}" | grep -i 'Expiry Date' | ${AWK} '{ print $4 }' ) 
+		if [ -z "$EXDATE_TMP" ]
+			then
+				EXP_DAYS=NULL
+			else
+				EXDATE=`date -d"$EXDATE_TMP" +%Y-%m-%d`
+				EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
+		fi
+
+
+	elif [ "$DTYPE" == "club" ]
+	then
+		EXDATE_TMP=$(${WHOIS} -h whois.nic.club "${1}" | grep -i 'Expiry Date' | ${AWK} '{ print $4 }' ) 
+		if [ -z "$EXDATE_TMP" ]
+			then
+				EXP_DAYS=NULL
+			else
+				EXDATE=`date -d"$EXDATE_TMP" +%Y-%m-%d`
+				EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
+		fi
+		
+		
+	elif [ "$DTYPE" == "fun" ]
+	then
+		EXDATE_TMP=$(${WHOIS} -h whois.nic.fun "${1}" | grep -i 'Expiry Date' | ${AWK} '{ print $4 }' ) 
+		if [ -z "$EXDATE_TMP" ]
+			then
+				EXP_DAYS=NULL
+			else
+				EXDATE=`date -d"$EXDATE_TMP" +%Y-%m-%d`
+				EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
+		fi
+		
+		
+	elif [ "$DTYPE" == "jp" ]
+	then
+		EXDATE_TMP=$(${WHOIS} -h whois.jprs.jp "${1}" | grep -i 'Expiry Date' | ${AWK} '{ print $4 }' ) 
+		if [ -z "$EXDATE_TMP" ]
+			then
+				EXP_DAYS=NULL
+			else
+				EXDATE=`date -d"$EXDATE_TMP" +%Y-%m-%d`
+				EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
+		fi
+		
+
 	elif [ "$DTYPE" == "br" ]
 	then
 		EXDATE_TMP=$(${WHOIS} -h whois.registro.br "${1}" | grep -i 'expires' | ${AWK} '{ print $2 }' ) 
