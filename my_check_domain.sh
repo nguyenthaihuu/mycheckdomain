@@ -2,13 +2,7 @@
 
 #############################################
 #
-# This plugin checks domain expiration date
-#
-# Author: Emil Wypych
-#
-# Contact: wypychemil at gmail.com
-#
-# GitHub: https://github.com/ewypych/icinga-domain-expiration-plugin
+# GitHub: https://github.com/nguyenthaihuu/mycheckdomain
 #
 #############################################
 
@@ -354,7 +348,7 @@ check_domain()
 
 
 	else
-		echo "UNKNOWN - "$DTYPE" unsupported"
+		echo "UNKNOWN - "$DTYPE" of domain $DOMAIN unsupported"
 		exit 3
 	fi
 }
@@ -425,7 +419,7 @@ done
 # check whether ALARM is greater or equal WARNING
 if [ $ALARM -ge $WARNING ]
 then
-	echo "UNKNOWN - CRITICAL threshold cannot be bigger than WARNING"
+	echo "UNKNOWN - CRITICAL domain $DOMAIN threshold cannot be bigger than WARNING"
 	exit 3
 fi
 
@@ -440,7 +434,7 @@ fi
 
 if ! [[ "$EXP_DAYS" =~ ^-?[0-9]+$ ]]
 then
-	echo "UNKNOWN - expiration date has not been provided by WHOIS server"
+	echo "UNKNOWN - Domain $DOMAIN expiration date has not been provided by WHOIS server"
 	exit 3
 else
 	if [ $EXP_DAYS -gt $WARNING  ]
@@ -457,10 +451,10 @@ else
 		exit 2
 	elif [  $EXP_DAYS -lt 0  ]
 	then
-		echo "CRITICAL - domain has expired!"
+		echo "CRITICAL - domain $DOMAIN has expired!"
 		exit 2
 	else
-		echo "UNKNOW - $EXP_DAYS"
+		echo "UNKNOW - $EXP_DAYS of domain $DOMAIN"
 		exit 3
 	fi
 fi
